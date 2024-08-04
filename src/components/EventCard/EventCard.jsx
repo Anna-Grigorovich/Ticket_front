@@ -44,8 +44,18 @@ import {
   Grid,
   Button,
 } from '@mui/material';
+import { format } from 'date-fns';
+import { uk } from 'date-fns/locale';
 
 const EventCard = ({ event }) => {
+  const eventDate = new Date(event.date);
+  const eventTime = event.time;
+
+  // Format date and time
+  const formattedDate = format(eventDate, 'd MMMM yyyy, EEEE', {
+    locale: uk,
+  });
+  const formattedTime = `${eventTime}`;
   return (
     <Card sx={{ display: 'flex', maxWidth: 800, margin: 2 }}>
       <Grid container spacing={2}>
@@ -67,10 +77,7 @@ const EventCard = ({ event }) => {
             </Typography>
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" color="text.secondary">
-                Дата: {event.date}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Время: {event.time}
+                {formattedDate}, {formattedTime}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Цена: {event.price} грн
