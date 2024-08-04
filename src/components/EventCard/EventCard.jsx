@@ -42,6 +42,7 @@ import {
   Typography,
   Box,
   Grid,
+  Button,
 } from '@mui/material';
 
 const EventCard = ({ event }) => {
@@ -74,6 +75,19 @@ const EventCard = ({ event }) => {
               <Typography variant="body2" color="text.secondary">
                 Цена: {event.price} грн
               </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  mt: 2,
+                  backgroundColor: 'black',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: 'gray',
+                  },
+                }}
+              >
+                купити квиток
+              </Button>
             </Box>
           </CardContent>
         </Grid>

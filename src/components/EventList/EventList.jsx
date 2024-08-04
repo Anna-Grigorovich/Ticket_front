@@ -67,12 +67,25 @@ const events = [
   },
 ];
 
+// const EventList = () => {
+//   return (
+//     <Box sx={{ p: 2 }}>
+//       <Grid container spacing={2} justifyContent="center">
+//         {events.map((event) => (
+//           <Grid item key={event.id} xs={12}>
+//             <EventCard event={event} />
+//           </Grid>
+//         ))}
+//       </Grid>
+//     </Box>
+//   );
+// };
 const EventList = () => {
   return (
     <Box sx={{ p: 2 }}>
       <Grid container spacing={2} justifyContent="center">
         {events.map((event) => (
-          <Grid item key={event.id} xs={12}>
+          <Grid item key={event.id} xs={12} sm={6} md={6} lg={6}>
             <EventCard event={event} />
           </Grid>
         ))}
