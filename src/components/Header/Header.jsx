@@ -19,7 +19,7 @@ export const Header = () => {
       sx={{ backgroundColor: '#000000', color: '#ffffff' }}
       className={c.header}
     >
-      <Toolbar>
+      <Toolbar className={c.headerWrap}>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Tickets
         </Typography>

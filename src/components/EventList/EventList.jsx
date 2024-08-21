@@ -71,7 +71,7 @@ const events = [
   { id: 1, title: 'Event 1', description: 'Description for Event 1', date: '2024-08-01', time: '18:00', price: 300, image: 'event.jpg' },
   { id: 2, title: 'Event 2', description: 'Description for Event 2', date: '2024-08-02', time: '19:00', price: 350, image: 'event.jpg' },
   { id: 3, title: 'Event 3', description: 'Description for Event 3', date: '2024-08-03', time: '20:00', price: 400, image: 'event.jpg' },
-  { id: 4, title: 'Event 4', description: 'Description for Event 4', date: '2024-08-04', time: '21:00', price: 450, image: 'event.jpg' },
+  { id: 4, title: 'Event 4', description: 'Description for Event 4', date: '2024-08-22', time: '21:00', price: 450, image: 'event.jpg' },
 ];
 const EventList = () => {
   const [filteredEvents, setFilteredEvents] = useState(events);

@@ -10,6 +10,7 @@ body {
 }
 
 main {
+  max-width: 1180px;
   flex: 1;
   padding: 1rem;
 }
