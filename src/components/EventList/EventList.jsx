@@ -1,4 +1,3 @@
-
 // import React from 'react';
 // import { Box, Grid } from '@mui/material';
 // import EventCard from '../EventCard/EventCard';
@@ -60,18 +59,63 @@
 
 // export default EventList;
 
-
-
 import React, { useState } from 'react';
-import { Box, Grid, Button, TextField, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Button,
+  TextField,
+  useMediaQuery,
+  useTheme,
+  IconButton,
+} from '@mui/material';
 import EventCard from '../EventCard/EventCard';
-import { addDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
+import {
+  addDays,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+} from 'date-fns';
+import sprite from '../../img/sprite.svg';
 
 const events = [
-  { id: 1, title: 'Event 1', description: 'Description for Event 1', date: '2024-08-01', time: '18:00', price: 300, image: 'event.jpg' },
-  { id: 2, title: 'Event 2', description: 'Description for Event 2', date: '2024-08-02', time: '19:00', price: 350, image: 'event.jpg' },
-  { id: 3, title: 'Event 3', description: 'Description for Event 3', date: '2024-08-03', time: '20:00', price: 400, image: 'event.jpg' },
-  { id: 4, title: 'Event 4', description: 'Description for Event 4', date: '2024-08-22', time: '21:00', price: 450, image: 'event.jpg' },
+  {
+    id: 1,
+    title: 'Event 1',
+    description: 'Description for Event 1',
+    date: '2024-08-01',
+    time: '18:00',
+    price: 300,
+    image: 'event.jpg',
+  },
+  {
+    id: 2,
+    title: 'Event 2',
+    description: 'Description for Event 2',
+    date: '2024-08-02',
+    time: '19:00',
+    price: 350,
+    image: 'event.jpg',
+  },
+  {
+    id: 3,
+    title: 'Event 3',
+    description: 'Description for Event 3',
+    date: '2024-08-03',
+    time: '20:00',
+    price: 400,
+    image: 'event.jpg',
+  },
+  {
+    id: 4,
+    title: 'Event 4',
+    description: 'Description for Event 4',
+    date: '2024-08-22',
+    time: '21:00',
+    price: 450,
+    image: 'event.jpg',
+  },
 ];
 const EventList = () => {
   const [filteredEvents, setFilteredEvents] = useState(events);
@@ -84,14 +128,21 @@ const EventList = () => {
     if (filterType === 'week') {
       const start = startOfWeek(today);
       const end = endOfWeek(today);
-      filtered = events.filter(event => new Date(event.date) >= start && new Date(event.date) <= end);
+      filtered = events.filter(
+        (event) => new Date(event.date) >= start && new Date(event.date) <= end,
+      );
     } else if (filterType === 'month') {
       const start = startOfMonth(today);
       const end = endOfMonth(today);
-      filtered = events.filter(event => new Date(event.date) >= start && new Date(event.date) <= end);
+      filtered = events.filter(
+        (event) => new Date(event.date) >= start && new Date(event.date) <= end,
+      );
     } else if (filterType === 'tomorrow') {
       const tomorrow = addDays(today, 1);
-      filtered = events.filter(event => new Date(event.date).toDateString() === tomorrow.toDateString());
+      filtered = events.filter(
+        (event) =>
+          new Date(event.date).toDateString() === tomorrow.toDateString(),
+      );
     } else if (filterType === 'all') {
       filtered = events;
     }
@@ -102,7 +153,9 @@ const EventList = () => {
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
     setSearchText(query);
-    const filtered = events.filter(e => e.title.toLowerCase().includes(query));
+    const filtered = events.filter((e) =>
+      e.title.toLowerCase().includes(query),
+    );
     setFilteredEvents(filtered);
   };
 
@@ -142,33 +195,49 @@ const EventList = () => {
           <Button
             variant="text"
             onClick={() => handleFilter('all')}
-            sx={{ color: 'black', textTransform: 'none', '&:hover': { backgroundColor: 'transparent' } }}
+            sx={{
+              color: 'black',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: 'transparent' },
+            }}
           >
             Всі
           </Button>
           <Button
             variant="text"
             onClick={() => handleFilter('week')}
-            sx={{ color: 'black', textTransform: 'none', '&:hover': { backgroundColor: 'transparent' } }}
+            sx={{
+              color: 'black',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: 'transparent' },
+            }}
           >
             На цьому тижні
           </Button>
           <Button
             variant="text"
             onClick={() => handleFilter('month')}
-            sx={{ color: 'black', textTransform: 'none', '&:hover': { backgroundColor: 'transparent' } }}
+            sx={{
+              color: 'black',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: 'transparent' },
+            }}
           >
             В цьому місяці
           </Button>
           <Button
             variant="text"
             onClick={() => handleFilter('tomorrow')}
-            sx={{ color: 'black', textTransform: 'none', '&:hover': { backgroundColor: 'transparent' } }}
+            sx={{
+              color: 'black',
+              textTransform: 'none',
+              '&:hover': { backgroundColor: 'transparent' },
+            }}
           >
             Завтра
           </Button>
         </Box>
-        <TextField
+        {/* <TextField
           label="Пошук за назвою"
           variant="outlined"
           size="small"
@@ -178,7 +247,43 @@ const EventList = () => {
             width: isMobile ? '100%' : 300,
             mt: isMobile ? 2 : 0,
           }}
-        />
+        /> */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            width: isMobile ? '100%' : 'auto',
+            mt: isMobile ? 2 : 0,
+            border: '1px solid #ccc', // Кастомная граница для поля поиска
+            borderRadius: '4px',
+            padding: '2px 4px',
+          }}
+        >
+          {/* Поле для поиска */}
+          <TextField
+            placeholder="Пошук за назвою"
+            variant="outlined"
+            size="small"
+            value={searchText}
+            onChange={handleSearch}
+            sx={{
+              padding: '0px',
+              flexGrow: 1, // Поле будет занимать оставшуюся ширину
+              border: 'none', // Убираем границу от самого поля
+              '& fieldset': { border: 'none' }, // Убираем стандартную рамку
+            }}
+          />
+
+          {/* Кнопка для поиска */}
+          <IconButton
+            sx={{ p: '10px', borderRadius: '0', backgroundColor: '#000000' }}
+            aria-label="search"
+          >
+            <svg width="24" height="24">
+              <use href={`${sprite}#icon-search`} />
+            </svg>
+          </IconButton>
+        </Box>
       </Box>
       <Grid container spacing={2} justifyContent="center">
         {filteredEvents.map((event) => (
@@ -218,30 +323,30 @@ const EventList = () => {
 //   return (
 //     <Box sx={{ p: 2 }}>
 //       <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
-//         <Button 
-//           variant="text" 
-//           onClick={() => handleFilter('all')} 
+//         <Button
+//           variant="text"
+//           onClick={() => handleFilter('all')}
 //           sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: 'darkgray' } }}
 //         >
 //           Всі
 //         </Button>
-//         <Button 
-//           variant="text" 
-//           onClick={() => handleFilter('week')} 
+//         <Button
+//           variant="text"
+//           onClick={() => handleFilter('week')}
 //           sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: 'darkgray' } }}
 //         >
 //           На цьому тижні
 //         </Button>
-//         <Button 
-//           variant="text" 
-//           onClick={() => handleFilter('month')} 
+//         <Button
+//           variant="text"
+//           onClick={() => handleFilter('month')}
 //           sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: 'darkgray' } }}
 //         >
 //           В цьому місяці
 //         </Button>
-//         <Button 
-//           variant="text" 
-//           onClick={() => handleFilter('tomorrow')} 
+//         <Button
+//           variant="text"
+//           onClick={() => handleFilter('tomorrow')}
 //           sx={{ backgroundColor: 'black', color: 'white', '&:hover': { backgroundColor: 'darkgray' } }}
 //         >
 //           Завтра
