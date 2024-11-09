@@ -1,0 +1,31 @@
+/* path: src/page/About/AboutPage.css */
+
+.about-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-page h1 {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.about-page p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+.about-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.about-page li {
+  margin-bottom: 0.5em;
+}
+
+.about-page li strong {
+  font-weight: bold;
+}

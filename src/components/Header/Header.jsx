@@ -90,11 +90,11 @@ export const Header = () => {
             </Typography>
 
             {/* Иконка корзинки справа */}
-            <IconButton edge="end" color="inherit">
+            {/* <IconButton edge="end" color="inherit">
               <svg width="24" height="24">
                 <use href={`${sprite}#icon-shop-cart`} />
               </svg>
-            </IconButton>
+            </IconButton> */}
           </>
         ) : (
           <>
@@ -134,11 +134,11 @@ export const Header = () => {
                 Події
               </Button>
             </Box>
-            <IconButton edge="end" color="inherit">
+            {/* <IconButton edge="end" color="inherit">
               <svg width="24" height="24">
                 <use href={`${sprite}#icon-shop-cart`} />
               </svg>
-            </IconButton>
+            </IconButton> */}
           </>
         )}
       </Toolbar>

@@ -4,7 +4,7 @@ import EventList from '../../components/EventList/EventList';
 const Events = () => {
   return (
     <div>
-      <h1>Події</h1>
+      {/* <h1>Події</h1> */}
       <EventList />
     </div>
   );

@@ -1,0 +1,19 @@
+/* src/page/OfferPage/OfferPage.css */
+.offer-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+}
+
+.offer-page h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.offer-page p {
+  margin-bottom: 1rem;
+}

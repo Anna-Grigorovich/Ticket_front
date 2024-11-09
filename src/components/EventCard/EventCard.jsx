@@ -5,69 +5,123 @@ import {
   CardMedia,
   Typography,
   Box,
-  Grid,
   Button,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
 
 const EventCard = ({ event }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const eventDate = new Date(event.date);
   const eventTime = event.time;
 
-  // Format date and time
-  const formattedDate = format(eventDate, 'd MMMM yyyy, EEEE', {
+  // Форматируем дату и время
+  const formattedDateTime = format(eventDate, 'd MMMM HH:mm', {
     locale: uk,
   });
-  const formattedTime = `${eventTime}`;
 
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', maxWidth: 800, margin: 2 }}>
-      <Grid container spacing={2} direction={{ xs: 'column', md: 'row' }}>
-        <Grid item xs={12} md={4}>
+    <Card
+      sx={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        maxWidth: 800,
+        margin: 2,
+        padding: 2,
+        borderRadius: '15px',
+        backgroundColor: '#FFFFFF',
+        boxShadow: 'none',
+        overflow: 'hidden',
+
+        // Псевдоэлементы для вырезов по бокам
+        '&::before, &::after': {
+          content: '""',
+          position: 'absolute',
+          width: '30px', // Ширина каждого круга
+          height: '30px', // Высота каждого круга
+          backgroundColor: '#e2e0e0',
+          borderRadius: '50%', // Радиус для круглого элемента
+          zIndex: 1,
+        },
+        '&::before': {
+          top: '58%',
+          left: '-18px', // Смещение влево для левого круга
+          transform: 'translateY(-50%)',
+        },
+        '&::after': {
+          top: '58%',
+          right: '-18px', // Смещение вправо для правого круга
+          transform: 'translateY(-50%)',
+        },
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          borderBottom: '1px dashed #E5E5E5',
+          paddingBottom: '14px',
+        }}
+      >
+        {/* Блок с изображением */}
+        <Box sx={{ display: 'flex', alignItems: 'center', marginRight: 2 }}>
           <CardMedia
             component="img"
-            sx={{ width: '100%', height: { xs: 200, md: '100%' }, objectFit: 'cover' }}
+            sx={{
+              width: 50,
+              height: 70,
+              borderRadius: '8px',
+              objectFit: 'cover',
+            }}
             image={require(`../../img/${event.image}`)}
             alt={event.title}
           />
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {event.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {event.description}
-            </Typography>
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="body2" color="text.secondary">
-                {formattedDate}, {formattedTime}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                від {event.price} грн
-              </Typography>
-              <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    mt: 2,
-                    backgroundColor: 'black',
-                    color: 'white',
-                    '&:hover': {
-                      backgroundColor: 'gray',
-                    },
-                  }}
-                >
-                  купити квиток
-                </Button>
-              </Link>
-            </Box>
-          </CardContent>
-        </Grid>
-      </Grid>
+        </Box>
+
+        {/* Блок с датой и названием */}
+        <CardContent
+          sx={{
+            flex: 1,
+            padding: '0 !important',
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            {formattedDateTime}
+          </Typography>
+          <Typography variant="h8" color="text.primary" fontWeight="bold">
+            {event.title}
+          </Typography>
+        </CardContent>
+      </Box>
+
+      {/* Блок с кнопкой "купити квиток" */}
+      <Box sx={{ marginTop: '15px' }}>
+        <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
+          <Button
+            variant="text"
+            sx={{
+              fontWeight: 'bold',
+              fontSize: 'large',
+              color: '#007AFF',
+              '&:hover': {
+                color: '#005bb5',
+              },
+            }}
+          >
+            КУПИТИ
+          </Button>
+        </Link>
+      </Box>
     </Card>
   );
 };
+
 export default EventCard;
