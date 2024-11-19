@@ -15,7 +15,7 @@ const ContactsPage = () => {
         href="tel:+380991234567"
         sx={{ display: 'block', color: '#4c4646', mb: 1 }}
       >
-        +38 (099) 123-45-67
+        +38 (063) 601-57-18
       </Link>
       <Link
         href="mailto:support@toptickets.com"

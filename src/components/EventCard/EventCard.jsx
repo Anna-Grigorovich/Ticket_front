@@ -18,10 +18,9 @@ const EventCard = ({ event }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const eventDate = new Date(event.date);
-  const eventTime = event.time;
 
   // Форматируем дату и время
-  const formattedDateTime = format(eventDate, 'd MMMM HH:mm', {
+  const formattedDateTime = format(eventDate, 'd MMMM yyyy, EEE. HH:mm', {
     locale: uk,
   });
 
@@ -46,7 +45,7 @@ const EventCard = ({ event }) => {
           position: 'absolute',
           width: '30px', // Ширина каждого круга
           height: '30px', // Высота каждого круга
-          backgroundColor: '#e2e0e0',
+          backgroundColor: '#E5E5E5',
           borderRadius: '50%', // Радиус для круглого элемента
           zIndex: 1,
         },
@@ -73,7 +72,7 @@ const EventCard = ({ event }) => {
       >
         {/* Блок с изображением */}
         <Box sx={{ display: 'flex', alignItems: 'center', marginRight: 2 }}>
-          <CardMedia
+          {/* <CardMedia
             component="img"
             sx={{
               width: 50,
@@ -82,6 +81,17 @@ const EventCard = ({ event }) => {
               objectFit: 'cover',
             }}
             image={require(`../../img/${event.image}`)}
+            alt={event.title}
+          /> */}
+          <CardMedia
+            component="img"
+            sx={{
+              width: 50,
+              height: 70,
+              borderRadius: '8px',
+              objectFit: 'cover',
+            }}
+            image={`http://localhost:3300/images/${event._id}.jpg`}
             alt={event.title}
           />
         </Box>
@@ -104,7 +114,7 @@ const EventCard = ({ event }) => {
 
       {/* Блок с кнопкой "купити квиток" */}
       <Box sx={{ marginTop: '15px' }}>
-        <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/event/${event._id}`} style={{ textDecoration: 'none' }}>
           <Button
             variant="text"
             sx={{

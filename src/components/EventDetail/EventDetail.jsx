@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import {
   Card,
@@ -16,63 +17,37 @@ import sprite from '../../img/sprite.svg';
 import { format } from 'date-fns';
 import uk from 'date-fns/locale/uk';
 
-const events = [
-  {
-    id: 1,
-    title: 'POVYTA - CОЛЬНИЙ КОНЦЕРТ',
-    description:
-      ' 31/10/2024 Кавер Вечір пісень В.Стрикало live-looping by Rodin N 💃Готуйте дупці для святкування Хеловіна 💀 в компанії Rodin N! 🌪👻❤️‍🔥 Буде все як ми любимо: угар, відрив і експеременти! Цього разу в форматі вечірки! Буде багато пісень від RODIN, DJ Polly та прекрасні танцівниці! Вхід - 300 грн. в попередньому продажі 400 грн. на вході в день концерту Арт-Клуб "Теплий Ламповий"',
-    date: '2024-08-01',
-    time: '18:00',
-    price: 300,
-    image: 'event.png',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 2,
-    title: 'Event 2',
-    description: 'Description for Event 2',
-    description: `
-    <p>🎶 Благодійний та затишний квартирник від молодіжного центру Київ Хаб 🎶</p>
-    <p>17 листопада 2024 року запрошуємо вас на вечір теплої атмосфери, неймовірної музики та творчості!</p>
-    <p>Що вас чекає:</p>
-    <ul>
-      <li>Живе виконання 🎙️авторських пісень від талановитих студентів КМАМ ім. Глієра, які поділяться своїми емоціями та музичними шедеврами.</li>
-      <li>Виставка робіт 🖼️неймовірних художників - яскраві картини, які ви зможете не тільки оглянути, а й придбати, щоб прикрасити свій будинок.</li>
-      <li>Ароматний глінтвейн🍷 - за вільний донат, щоб зігрітися в холодний вечір.</li>
-      <li>Благодійний аукціон - кошти з якого будуть передані на ЗСУ.</li>
-    </ul>
-    <p><strong>Де:</strong> Арт-клуб «Теплий Ламповий» (м. Арсенальна, пров. Бутишів 14)</p>
-    <p><strong>Коли:</strong> 17 листопада о 18:00</p>
-    <p><strong>Вхід:</strong> 300 грн. (в попередньому продажі) / 400 грн. (на вході в день концерту)</p>
-    <p>Не пропустіть можливість провести чудовий вечір в колі друзів, підтримати молодих талантів та зробити добру справу!</p>
-  `,
-    date: '2024-08-02',
-    time: '19:00',
-    price: 350,
-    image: 'event.png',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-];
-
 const EventDetail = () => {
-  const { id } = useParams();
-  const event = events.find((event) => event.id === parseInt(id));
+  const { id } = useParams(); // Получаем id из параметров URL
+  const [event, setEvent] = useState(null);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  useEffect(() => {
+    // Запрос на сервер для получения данных о выбранном ивенте
+    axios
+      .get(`http://localhost:3300/events/${id}`)
+      .then((response) => {
+        setEvent(response.data); // Сохраняем данные о ивенте в state
+      })
+      .catch((error) => console.error('Failed to fetch event:', error));
+  }, [id]); // useEffect срабатывает при изменении id в URL
+
   if (!event) {
-    return <Typography variant="h6">Event not found</Typography>;
+    return <div>Loading...</div>; // Пока данные не загружены
+  }
+
+  if (!event) {
+    return <Typography variant="h6">Подію не знайдено</Typography>;
   }
 
   const eventDate = new Date(event.date);
-  const formattedDay = format(eventDate, 'd MMMM yyyy', {
-    locale: uk,
-  }).toUpperCase();
-  const formattedTime = event.time;
 
+  // Форматируем дату и время
+  const formattedDateTime = format(eventDate, 'd MMMM yyyy, EEE. HH:mm', {
+    locale: uk,
+  });
   return (
     <Box>
       <Card
@@ -93,7 +68,7 @@ const EventDetail = () => {
               borderRadius: '15px',
               objectFit: 'cover',
             }}
-            image={require(`../../img/${event.image}`)}
+            image={`http://localhost:3300/images/${event._id}.jpg`}
             alt={event.title}
           />
         </Box>
@@ -122,16 +97,20 @@ const EventDetail = () => {
                   <use href={`${sprite}#icon-calendar`} />
                 </svg>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant="body2" color="text.secondary">
-                    {formattedDay}
-                  </Typography>
                   <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ textTransform: 'lowercase' }}
+                  >
+                    {formattedDateTime}
+                  </Typography>
+                  {/* <Typography
                     variant="body1"
                     color="text.primary"
                     sx={{ fontWeight: 'bold' }}
                   >
                     {formattedTime}
-                  </Typography>
+                  </Typography> */}
                 </Box>
               </Box>
             </Box>
@@ -172,7 +151,7 @@ const EventDetail = () => {
             {!isMobile && (
               <Button
                 component={Link}
-                to={`/purchase/${event.id}`}
+                to={`/purchase/${event._id}`}
                 variant="contained"
                 sx={{
                   width: '100%',
@@ -205,7 +184,7 @@ const EventDetail = () => {
         <Box sx={{ position: 'relative', bottom: 0, paddingBottom: '100px' }}>
           <Button
             component={Link}
-            to={`/purchase/${event.id}`}
+            to={`/purchase/${event._id}`}
             variant="contained"
             sx={{
               width: 'calc(100% - 30px)',

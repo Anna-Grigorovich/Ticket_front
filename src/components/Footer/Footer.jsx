@@ -11,11 +11,11 @@ export const Footer = () => {
       sx={{
         p: 4,
         borderTop: '1px solid #b8b1b1',
-        backgroundColor: '#f4f4f4',
+        backgroundColor: 'inherit',
         textAlign: 'center',
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
       }}
     >
@@ -70,14 +70,20 @@ export const Footer = () => {
       {/* Секция контактов */}
       <Box sx={{ textAlign: 'center', mt: { xs: 2, sm: 0 } }}>
         <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#333' }}>
-          Контакты
+          Контакти
         </Typography>
         <Link
           href="tel:+380991234567"
           sx={{ color: '#4c4646', display: 'block' }}
         >
-          +38 (099) 123-45-67
+          +38 (063) 601-57-18
         </Link>
+        {/* <Link
+          href="tel:+380991234567"
+          sx={{ color: '#4c4646', display: 'block' }}
+        >
+          +38 (099) 123-45-67
+        </Link> */}
         <Link
           href="mailto:support@toptickets.com"
           sx={{ color: '#4c4646', display: 'block' }}
@@ -89,7 +95,7 @@ export const Footer = () => {
       {/* Социальные сети */}
       <Box sx={{ textAlign: 'right', mt: { xs: 2, sm: 0 } }}>
         <Typography variant="body1" sx={{ fontWeight: 'bold', color: '#333' }}>
-          Следите за нами
+          Ми у соціальних мережах
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
           <Link

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Grid,
@@ -19,125 +19,33 @@ import {
 } from 'date-fns';
 import sprite from '../../img/sprite.svg';
 import c from './EventList.module.css';
-
-const events = [
-  {
-    id: 1,
-    title: 'кавер вечыр стрыкало пати хард',
-    description: 'Description for Event 1',
-    date: '2024-08-01',
-    time: '18:00',
-    price: 300,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 2,
-    title: 'Event 2',
-    description: 'Description for Event 2',
-    date: '2024-08-02',
-    time: '19:00',
-    price: 350,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 3,
-    title: 'Event 3',
-    description: 'Description for Event 3',
-    date: '2024-08-03',
-    time: '20:00',
-    price: 400,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 4,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-08-22',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 5,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-08-22',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 6,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-08-22',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 7,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-10-30',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 8,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-10-30',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 9,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-10-30',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-  {
-    id: 10,
-    title: 'Event 4',
-    description: 'Description for Event 4',
-    date: '2024-10-30',
-    time: '21:00',
-    price: 450,
-    image: 'event.jpg',
-    place: 'Арт-клуб Теплий Ламповий',
-    address: 'конскої залупи 13/12 а',
-  },
-];
+import axios from 'axios';
 
 const EventList = () => {
-  const [filteredEvents, setFilteredEvents] = useState(events);
+  const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [filterLabel, setFilterLabel] = useState('Усі події'); // Показать на украинском
+  const [filterLabel, setFilterLabel] = useState('Усі події');
+
+  useEffect(() => {
+    // Fetch events from the backend
+    axios
+      .get('http://localhost:3300/events', {
+        params: {
+          limit: 1000, // Устанавливаем большой лимит
+        },
+      })
+      .then((response) => {
+        const backendEvents = response.data.events.map((event) => ({
+          ...event,
+          date: new Date(event.date),
+        }));
+        setEvents(backendEvents);
+        setFilteredEvents(backendEvents);
+      })
+      .catch((error) => console.error('Failed to fetch events:', error));
+  }, []);
 
   const applyFilter = (filterType) => {
     const today = new Date();
@@ -149,8 +57,7 @@ const EventList = () => {
         const endOfWeekDate = endOfWeek(today);
         filtered = events.filter(
           (event) =>
-            new Date(event.date) >= startOfWeekDate &&
-            new Date(event.date) <= endOfWeekDate,
+            event.date >= startOfWeekDate && event.date <= endOfWeekDate,
         );
         setFilterLabel('На цьому тижні');
         break;
@@ -159,23 +66,20 @@ const EventList = () => {
         const endOfMonthDate = endOfMonth(today);
         filtered = events.filter(
           (event) =>
-            new Date(event.date) >= startOfMonthDate &&
-            new Date(event.date) <= endOfMonthDate,
+            event.date >= startOfMonthDate && event.date <= endOfMonthDate,
         );
         setFilterLabel('У цьому місяці');
         break;
       case 'tomorrow':
         const tomorrowDate = addDays(today, 1);
         filtered = events.filter(
-          (event) =>
-            new Date(event.date).toDateString() === tomorrowDate.toDateString(),
+          (event) => event.date.toDateString() === tomorrowDate.toDateString(),
         );
         setFilterLabel('Завтра');
         break;
       case 'today':
         filtered = events.filter(
-          (event) =>
-            new Date(event.date).toDateString() === today.toDateString(),
+          (event) => event.date.toDateString() === today.toDateString(),
         );
         setFilterLabel('Сьогодні');
         break;
@@ -200,14 +104,7 @@ const EventList = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box
-      sx={{
-        p: 2,
-        // overflowX: 'hidden',
-        maxWidth: '100%',
-        boxSizing: 'border-box',
-      }}
-    >
+    <Box sx={{ p: 2, maxWidth: '100%', boxSizing: 'border-box' }}>
       <Box
         sx={{
           mb: 4,
@@ -251,6 +148,8 @@ const EventList = () => {
             backgroundColor: '#FFFFFF',
             color: '#000000',
             boxShadow: 'none',
+            textTransform: 'none',
+            fontWeight: 'bold',
           }}
           className={c.buttonFilter}
         >
@@ -260,7 +159,7 @@ const EventList = () => {
 
       <Grid container spacing={2} justifyContent="center">
         {filteredEvents.map((event) => (
-          <Grid item key={event.id} xs={12} sm={6} md={6} lg={6}>
+          <Grid item key={event._id} xs={12} sm={6} md={6} lg={6}>
             <EventCard event={event} />
           </Grid>
         ))}
@@ -301,11 +200,13 @@ const EventList = () => {
                 sx={{
                   color: filterLabel === filter.label ? '#FFF' : '#000',
                   backgroundColor:
-                    filterLabel === filter.label ? '#000' : '#F9F9F9',
+                    filterLabel === filter.label ? '#000' : '#FFF',
                   border: '1px solid #EAEAEA',
                   borderRadius: '4px',
                   padding: '8px 16px',
                   fontSize: '14px',
+                  fontWeight: 'bold',
+                  textTransform: 'none',
                   '&:hover': {
                     backgroundColor:
                       filterLabel === filter.label ? '#000' : '#F0F0F0',

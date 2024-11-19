@@ -6,21 +6,31 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectEvents } from '../../redux/eventSlice';
 import { Button, Typography, Box } from '@mui/material';
+import axios from 'axios';
+
 import sprite from '../../img/sprite.svg';
+import { format } from 'date-fns';
+import uk from 'date-fns/locale/uk';
 
 const TicketPurchasePage = () => {
-  const { eventId } = useParams();
-  const events = useSelector(selectEvents);
+  const { eventId } = useParams(); // Получаем id из параметров URL
   const [event, setEvent] = useState(null);
+
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate(); // инициализация
   const dispatch = useDispatch();
   useEffect(() => {
-    const foundEvent = events.find((evt) => evt.id === parseInt(eventId));
-    setEvent(foundEvent);
-  }, [eventId, events]);
+    // Запрос на сервер для получения данных о выбранном ивенте
+    axios
+      .get(`http://localhost:3300/events/${eventId}`)
+      .then((response) => {
+        console.log(eventId);
+        setEvent(response.data); // Сохраняем данные о ивенте в state
+      })
+      .catch((error) => console.log(eventId));
+  }, [eventId]); // useEffect срабатывает при изменении id в URL
 
-  if (!event) return <Typography>Загрузка события...</Typography>;
+  if (!event) return <Typography>Завантаження події...</Typography>;
 
   const handleIncrease = () => setQuantity((prev) => prev + 1);
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -36,8 +46,14 @@ const TicketPurchasePage = () => {
         quantity,
       }),
     );
-    navigate(`/checkout/${eventId}`);
+    navigate(`/checkout/${event._id}`);
   };
+  const eventDate = new Date(event.date);
+
+  // Форматируем дату и время
+  const formattedDateTime = format(eventDate, 'd MMMM yyyy, EEE. HH:mm', {
+    locale: uk,
+  });
   return (
     <Box>
       <Typography sx={{ fontWeight: 'bold', fontSize: '24px', mb: 2 }}>
@@ -78,8 +94,12 @@ const TicketPurchasePage = () => {
           <svg width="20" height="20" style={{ marginRight: 8 }}>
             <use href={`${sprite}#icon-calendar`} />
           </svg>
-          <Typography variant="body1" color="text.primary">
-            {event.date}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ textTransform: 'lowercase' }}
+          >
+            {formattedDateTime}
           </Typography>
         </Box>
 

@@ -44,11 +44,37 @@ export const Header = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button component={NavLink} to="/">
-          <ListItemText primary="Головна" />
-        </ListItem>
-        <ListItem button component={NavLink} to="/events">
+        <ListItem
+          button
+          component={NavLink}
+          to="/events"
+          sx={{ textDecoration: 'none', color: 'black' }}
+        >
           <ListItemText primary="Події" />
+        </ListItem>
+        <ListItem
+          button
+          component={NavLink}
+          to="/about"
+          sx={{ textDecoration: 'none', color: 'black' }}
+        >
+          <ListItemText primary="Про нас" />
+        </ListItem>
+        <ListItem
+          button
+          component={NavLink}
+          to="/offer"
+          sx={{ textDecoration: 'none', color: 'black' }}
+        >
+          <ListItemText primary="Оферта" />
+        </ListItem>
+        <ListItem
+          button
+          component={NavLink}
+          to="/contacts"
+          sx={{ textDecoration: 'none', color: 'black' }}
+        >
+          <ListItemText primary="Контакти" />
         </ListItem>
       </List>
     </Box>
@@ -76,6 +102,12 @@ export const Header = () => {
               anchor="left"
               open={isDrawerOpen}
               onClose={toggleDrawer(false)}
+              PaperProps={{
+                sx: {
+                  backgroundColor: '#f4f4f4', // Задаем цвет фона
+                  width: 250, // Ширина дравера
+                },
+              }}
             >
               {menuItems}
             </Drawer>
@@ -103,9 +135,9 @@ export const Header = () => {
               Tickets
             </Typography>
             <Box sx={{ display: 'flex' }}>
-              <Button
+              {/* <Button
                 component={NavLink}
-                to="/"
+                to="/about"
                 sx={{
                   color: 'black',
                   textDecoration: 'none',
@@ -117,21 +149,37 @@ export const Header = () => {
                 }}
                 exact
               >
-                Головна
-              </Button>
+                Про нас
+              </Button> */}
               <Button
                 component={NavLink}
-                to="/events"
+                to="/"
                 sx={{
+                  fontWeight: '600',
                   color: 'black',
                   textDecoration: 'none',
                   '&.active': {
-                    textDecoration: 'underline',
-                    color: '#ffffff',
+                    // textDecoration: 'underline',
+                    // color: '#ffffff',
                   },
                 }}
               >
                 Події
+              </Button>
+              <Button
+                component={NavLink}
+                to="/about"
+                sx={{
+                  color: 'black',
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                  '&.active': {
+                    // textDecoration: 'underline',
+                    // color: '#ffffff',
+                  },
+                }}
+              >
+                Про нас
               </Button>
             </Box>
             {/* <IconButton edge="end" color="inherit">
@@ -145,51 +193,3 @@ export const Header = () => {
     </AppBar>
   );
 };
-
-// export const Header = () => {
-//   return (
-//     <AppBar
-//       position="static"
-//       sx={{ backgroundColor: 'inherit', color: 'black', boxShadow: 'none' }}
-//       className={c.header}
-//     >
-//       <Toolbar className={c.headerWrap}>
-//         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-//           Tickets
-//         </Typography>
-//         <Box sx={{ display: 'flex' }}>
-//           <Button
-//             component={NavLink}
-//             to="/"
-//             sx={{
-//               color: 'black',
-//               textDecoration: 'none',
-//               marginRight: 2,
-//               '&.active': {
-//                 textDecoration: 'underline',
-//                 color: '#ffffff',
-//               },
-//             }}
-//             exact
-//           >
-//             Головна
-//           </Button>
-//           <Button
-//             component={NavLink}
-//             to="/events"
-//             sx={{
-//               color: 'black',
-//               textDecoration: 'none',
-//               '&.active': {
-//                 textDecoration: 'underline',
-//                 color: '#ffffff',
-//               },
-//             }}
-//           >
-//             Події
-//           </Button>
-//         </Box>
-//       </Toolbar>
-//     </AppBar>
-//   );
-// };

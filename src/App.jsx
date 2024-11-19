@@ -1,9 +1,9 @@
 import './App.css';
-import { NavLink, Route, Router, Routes } from 'react-router-dom';
+import {  Route,  Routes } from 'react-router-dom';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import Events from './page/Events/Events';
-import Home from './page/Home/Home';
+// import Home from './page/Home/Home';
 import EventDetail from './components/EventDetail/EventDetail';
 import TicketPurchasePage from './components/TicketPurchasePage/TicketPurchasePage';
 import CheckoutPage from './components/CheckoutPage/CheckoutPage';
@@ -17,7 +17,7 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Events />} />
           <Route path="/events" element={<Events />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
