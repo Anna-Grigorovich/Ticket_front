@@ -1,15 +1,20 @@
-// src/components/Footer/Footer.js
 import React from 'react';
 import { Box, Button, Link, Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Facebook, Instagram } from '@mui/icons-material';
+import sprite from '../../img/sprite.svg';
 
 export const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate('/events');
+  };
+
   return (
     <Box
       component="footer"
       sx={{
-        p: 4,
         borderTop: '1px solid #b8b1b1',
         backgroundColor: 'inherit',
         textAlign: 'center',
@@ -19,11 +24,24 @@ export const Footer = () => {
         alignItems: 'center',
       }}
     >
-      {/* Секция навигации */}
+      {/* Секция логотипа и навигации */}
       <Box sx={{ textAlign: 'left' }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
-          Top Tickets
-        </Typography>
+        {/* Логотип */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+            justifyContent: 'center',
+          }}
+          onClick={handleLogoClick}
+        >
+          <svg width="150" height="150">
+            <use href={`${sprite}#icon-logo`} />
+          </svg>
+        </Box>
+
+        {/* Навигация */}
         <Button
           component={NavLink}
           to="/about"
@@ -73,17 +91,17 @@ export const Footer = () => {
           Контакти
         </Typography>
         <Link
-          href="tel:+380991234567"
+          href="tel:+380636037569"
           sx={{ color: '#4c4646', display: 'block' }}
         >
-          +38 (063) 601-57-18
+          +38 (063) 603-75-69
         </Link>
-        {/* <Link
-          href="tel:+380991234567"
+        <Link
+          href="tel:+380500777644"
           sx={{ color: '#4c4646', display: 'block' }}
         >
-          +38 (099) 123-45-67
-        </Link> */}
+          +38 (050) 077-76-44
+        </Link>
         <Link
           href="mailto:support@toptickets.com"
           sx={{ color: '#4c4646', display: 'block' }}

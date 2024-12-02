@@ -12,10 +12,16 @@ const ContactsPage = () => {
         Зв'яжіться з нами:
       </Typography>
       <Link
-        href="tel:+380991234567"
+        href="tel:+380636037569"
         sx={{ display: 'block', color: '#4c4646', mb: 1 }}
       >
-        +38 (063) 601-57-18
+        +38 (063) 603-75-69
+      </Link>
+      <Link
+        href="tel:+380500777644"
+        sx={{ display: 'block', color: '#4c4646', mb: 1 }}
+      >
+        +38 (050) 077-76-44
       </Link>
       <Link
         href="mailto:support@toptickets.com"

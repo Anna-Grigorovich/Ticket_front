@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   Box,
   IconButton,
@@ -12,19 +11,16 @@ import {
   ListItemText,
   useMediaQuery,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu'; // Иконка для бургер-меню от MUI
 import c from './Header.module.css';
 import sprite from '../../img/sprite.svg';
 
 export const Header = () => {
-  // Состояние для бургер-меню
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-
-  // Проверка, является ли экран мобильным
   const isMobile = useMediaQuery('(max-width:600px)');
+  const navigate = useNavigate();
 
-  // Функция для переключения меню
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === 'keydown' &&
@@ -35,7 +31,10 @@ export const Header = () => {
     setDrawerOpen(open);
   };
 
-  // Список навигации для мобильной версии
+  const handleLogoClick = () => {
+    navigate('/events');
+  };
+
   const menuItems = (
     <Box
       sx={{ width: 250 }}
@@ -89,7 +88,7 @@ export const Header = () => {
       <Toolbar className={c.headerWrap}>
         {isMobile ? (
           <>
-            {/* Бургер-меню для мобильной версии */}
+            {/* Иконка для открытия дравера слева */}
             <IconButton
               edge="start"
               color="inherit"
@@ -104,64 +103,51 @@ export const Header = () => {
               onClose={toggleDrawer(false)}
               PaperProps={{
                 sx: {
-                  backgroundColor: '#f4f4f4', // Задаем цвет фона
-                  width: 250, // Ширина дравера
+                  backgroundColor: '#f4f4f4',
+                  width: 250,
                 },
               }}
             >
               {menuItems}
             </Drawer>
 
-            {/* Заголовок по центру */}
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, textAlign: 'center' }}
+            {/* Логотип справа */}
+            <Box
+              sx={{
+                marginLeft: 'auto',
+                cursor: 'pointer',
+              }}
+              onClick={handleLogoClick}
             >
-              Tickets
-            </Typography>
-
-            {/* Иконка корзинки справа */}
-            {/* <IconButton edge="end" color="inherit">
-              <svg width="24" height="24">
-                <use href={`${sprite}#icon-shop-cart`} />
+              <svg width="100" height="100">
+                <use href={`${sprite}#icon-logo`} />
               </svg>
-            </IconButton> */}
+            </Box>
           </>
         ) : (
           <>
-            {/* Для десктопной версии */}
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Tickets
-            </Typography>
-            <Box sx={{ display: 'flex' }}>
-              {/* <Button
-                component={NavLink}
-                to="/about"
-                sx={{
-                  color: 'black',
-                  textDecoration: 'none',
-                  marginRight: 2,
-                  '&.active': {
-                    textDecoration: 'underline',
-                    color: '#ffffff',
-                  },
-                }}
-                exact
-              >
-                Про нас
-              </Button> */}
+            {/* Логотип слева */}
+            <Box
+              sx={{
+                marginRight: 2,
+                cursor: 'pointer',
+              }}
+              onClick={handleLogoClick}
+            >
+              <svg width="150" height="150">
+                <use href={`${sprite}#icon-logo`} />
+              </svg>
+            </Box>
+
+            {/* Навигационные элементы справа */}
+            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
               <Button
                 component={NavLink}
-                to="/"
+                to="/events"
                 sx={{
                   fontWeight: '600',
                   color: 'black',
                   textDecoration: 'none',
-                  '&.active': {
-                    // textDecoration: 'underline',
-                    // color: '#ffffff',
-                  },
                 }}
               >
                 Події
@@ -173,20 +159,33 @@ export const Header = () => {
                   color: 'black',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  '&.active': {
-                    // textDecoration: 'underline',
-                    // color: '#ffffff',
-                  },
                 }}
               >
                 Про нас
               </Button>
+              {/* <Button
+                component={NavLink}
+                to="/offer"
+                sx={{
+                  color: 'black',
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                }}
+              >
+                Оферта
+              </Button>
+              <Button
+                component={NavLink}
+                to="/contacts"
+                sx={{
+                  color: 'black',
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                }}
+              >
+                Контакти
+              </Button> */}
             </Box>
-            {/* <IconButton edge="end" color="inherit">
-              <svg width="24" height="24">
-                <use href={`${sprite}#icon-shop-cart`} />
-              </svg>
-            </IconButton> */}
           </>
         )}
       </Toolbar>
