@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPurchaseDetails } from '../../redux/purchaseSlice';
-import { useNavigate } from 'react-router-dom'; // добавьте импорт
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectEvents } from '../../redux/eventSlice';
 import { Button, Typography, Box } from '@mui/material';
 import axios from 'axios';
 
@@ -22,7 +20,7 @@ const TicketPurchasePage = () => {
   useEffect(() => {
     // Запрос на сервер для получения данных о выбранном ивенте
     axios
-      .get(`http://localhost:3300/events/${eventId}`)
+      .get(`https://back.toptickets.com.ua/events/${eventId}`)
       .then((response) => {
         console.log(eventId);
         setEvent(response.data); // Сохраняем данные о ивенте в state

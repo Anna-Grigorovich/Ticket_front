@@ -91,7 +91,7 @@ const EventCard = ({ event }) => {
               borderRadius: '8px',
               objectFit: 'cover',
             }}
-            image={`http://localhost:3300/images/${event._id}.jpg`}
+            image={`https://back.toptickets.com.ua/images/${event._id}.jpg`}
             alt={event.title}
           />
         </Box>

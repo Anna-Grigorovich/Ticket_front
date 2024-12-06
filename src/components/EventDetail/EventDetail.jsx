@@ -27,7 +27,7 @@ const EventDetail = () => {
   useEffect(() => {
     // Запрос на сервер для получения данных о выбранном ивенте
     axios
-      .get(`http://localhost:3300/events/${id}`)
+      .get(`https://back.toptickets.com.ua/events/${id}`)
       .then((response) => {
         setEvent(response.data); // Сохраняем данные о ивенте в state
       })
@@ -68,7 +68,7 @@ const EventDetail = () => {
               borderRadius: '15px',
               objectFit: 'cover',
             }}
-            image={`http://localhost:3300/images/${event._id}.jpg`}
+            image={`https://back.toptickets.com.ua/images/${event._id}.jpg`}
             alt={event.title}
           />
         </Box>

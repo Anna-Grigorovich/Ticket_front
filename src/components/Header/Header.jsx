@@ -129,18 +129,20 @@ export const Header = () => {
             {/* Логотип слева */}
             <Box
               sx={{
-                marginRight: 2,
+                marginLeft: 2,
                 cursor: 'pointer',
               }}
               onClick={handleLogoClick}
             >
-              <svg width="150" height="150">
+              <svg width="150" height="100">
                 <use href={`${sprite}#icon-logo`} />
               </svg>
             </Box>
 
             {/* Навигационные элементы справа */}
-            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
+            <Box
+              sx={{ display: 'flex', marginLeft: 'auto', marginRight: '12px' }}
+            >
               <Button
                 component={NavLink}
                 to="/events"

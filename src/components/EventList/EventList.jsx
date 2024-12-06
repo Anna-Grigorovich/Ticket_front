@@ -31,7 +31,7 @@ const EventList = () => {
   useEffect(() => {
     // Fetch events from the backend
     axios
-      .get('http://localhost:3300/events', {
+      .get('https://back.toptickets.com.ua/events', {
         params: {
           limit: 1000, // Устанавливаем большой лимит
         },
