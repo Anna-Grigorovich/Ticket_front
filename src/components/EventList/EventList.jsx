@@ -27,11 +27,12 @@ const EventList = () => {
   const [searchText, setSearchText] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [filterLabel, setFilterLabel] = useState('Усі події');
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     // Fetch events from the backend
     axios
-      .get('https://back.toptickets.com.ua/events', {
+      .get(`${API_URL}/events`, {
         params: {
           limit: 1000, // Устанавливаем большой лимит
         },

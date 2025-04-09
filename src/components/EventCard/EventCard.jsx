@@ -12,6 +12,7 @@ import {
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { Link } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const EventCard = ({ event }) => {
   const theme = useTheme();
@@ -72,17 +73,6 @@ const EventCard = ({ event }) => {
       >
         {/* Блок с изображением */}
         <Box sx={{ display: 'flex', alignItems: 'center', marginRight: 2 }}>
-          {/* <CardMedia
-            component="img"
-            sx={{
-              width: 50,
-              height: 70,
-              borderRadius: '8px',
-              objectFit: 'cover',
-            }}
-            image={require(`../../img/${event.image}`)}
-            alt={event.title}
-          /> */}
           <CardMedia
             component="img"
             sx={{
@@ -91,7 +81,8 @@ const EventCard = ({ event }) => {
               borderRadius: '8px',
               objectFit: 'cover',
             }}
-            image={`https://back.toptickets.com.ua/images/${event._id}.jpg`}
+            // image={`https://back.toptickets.com.ua/images/${event._id}.jpg`}
+            image={`${API_URL}/images/${event._id}.jpg`}
             alt={event.title}
           />
         </Box>
