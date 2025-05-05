@@ -24,6 +24,7 @@ const EventCard = ({ event }) => {
   const formattedDateTime = format(eventDate, 'd MMMM yyyy, EEE. HH:mm', {
     locale: uk,
   });
+  const isSellEnded = event.sellEnded; // тут проверяем окончание продажи
 
   return (
     <Card
@@ -103,7 +104,7 @@ const EventCard = ({ event }) => {
         </CardContent>
       </Box>
 
-      {/* Блок с кнопкой "купити квиток" */}
+      {/* Блок с кнопкой "купити квиток"
       <Box sx={{ marginTop: '15px' }}>
         <Link to={`/event/${event._id}`} style={{ textDecoration: 'none' }}>
           <Button
@@ -120,6 +121,37 @@ const EventCard = ({ event }) => {
             КУПИТИ
           </Button>
         </Link>
+      </Box> */}
+      <Box sx={{ marginTop: '15px' }}>
+        {isSellEnded ? (
+          <Button
+            variant="text"
+            disabled
+            sx={{
+              fontWeight: 'bold',
+              fontSize: 'large',
+              color: 'gray',
+            }}
+          >
+            ПРОДАЖ ЗАКРИТИЙ
+          </Button>
+        ) : (
+          <Link to={`/event/${event._id}`} style={{ textDecoration: 'none' }}>
+            <Button
+              variant="text"
+              sx={{
+                fontWeight: 'bold',
+                fontSize: 'large',
+                color: '#007AFF',
+                '&:hover': {
+                  color: '#005bb5',
+                },
+              }}
+            >
+              КУПИТИ
+            </Button>
+          </Link>
+        )}
       </Box>
     </Card>
   );
